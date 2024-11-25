@@ -1,5 +1,5 @@
 torch
-pyg
+torch_geometric
 numpy
 matplotlib
 networkx
