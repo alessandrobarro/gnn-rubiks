@@ -1,5 +1,5 @@
-torch>=2.0.1
-torch-geometric>=2.4.0
-numpy>=1.21.0
-matplotlib>=3.5.0
-networkx>=2.6
+torch
+torch_geometric
+numpy
+matplotlib
+networkx
