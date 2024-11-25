@@ -3,3 +3,6 @@ torch_geometric
 numpy
 matplotlib
 networkx
+time
+random
+heapq
