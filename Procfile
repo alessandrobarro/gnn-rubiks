@@ -1,1 +1,1 @@
-worker: python main_node_class.py
+work: python main_node_class.py
