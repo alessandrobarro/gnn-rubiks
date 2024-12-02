@@ -264,31 +264,41 @@ if __name__ == "__main__":
     comptime = []
     lengths = []
     numnodes = []
-    for iter in range(0, 100):
-        print(iter)
-        nshuffle = random.randint(5, 10)
-        test_cube = RubiksCube()
-        test_state, random_moves = generate_random_test_configuration(test_cube, num_moves=nshuffle)
-        print(f"Test configuration generated from {nshuffle} random moves: {random_moves}")
+    with open("results.txt", "w") as file:
+        for iter in range(0, 100):
+            print(iter)
+            nshuffle = random.randint(5, 9)
+            test_cube = RubiksCube()
+            test_state, random_moves = generate_random_test_configuration(test_cube, num_moves=nshuffle)
+            file.write(f"Test configuration generated from {nshuffle} random moves: {random_moves}\n")
 
-        start_time = time.time()
-        solution_moves, num_nodes = a_star_search(test_cube, model)
-        end_time = time.time()
+            start_time = time.time()
+            solution_moves, num_nodes = a_star_search(test_cube, model)
+            end_time = time.time()
 
-        if solution_moves:
-            print("Solution found:", solution_moves)
-        else:
-            print("No solution was found")
+            if solution_moves:
+                file.write(f"Solution found: {solution_moves}\n")
+            else:
+                file.write("No solution was found\n")
 
-        elapsed_time = end_time - start_time
-        print(f"Execution time: {elapsed_time:.4f} seconds")
-        numnodes.append(num_nodes)
-        lengths.append(len(solution_moves))
-        comptime.append(elapsed_time)
-        iter += 1
+            elapsed_time = end_time - start_time
+            file.write(f"Execution time: {elapsed_time:.4f} seconds\n")
+            numnodes.append(num_nodes)
+            lengths.append(len(solution_moves))
+            comptime.append(elapsed_time)
 
-    print(f'avg time {sum(comptime)/len(comptime)} - avg length {sum(lengths)/len(lengths)} - avg visited {sum(numnodes)/len(numnodes)}')
-    print(numnodes)
-    print(lengths)
-    print(comptime)
+        # Calcola le medie e salva i risultati complessivi
+        avg_time = sum(comptime) / len(comptime)
+        avg_length = sum(lengths) / len(lengths)
+        avg_nodes = sum(numnodes) / len(numnodes)
+        file.write(f'\nAverage time: {avg_time:.4f} seconds\n')
+        file.write(f'Average solution length: {avg_length:.4f}\n')
+        file.write(f'Average nodes visited: {avg_nodes:.4f}\n')
+
+        # Salva i dati dettagliati
+        file.write(f'\nAll nodes visited: {numnodes}\n')
+        file.write(f'All solution lengths: {lengths}\n')
+        file.write(f'All computation times: {comptime}\n')
+
+    print("Results saved to results.txt")
 
