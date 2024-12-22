@@ -32,6 +32,9 @@ def feature_to_state(feature):
 def hash_state(state_feature):
     return tuple(state_feature.tolist())
 
+def hash_state_(state):
+    return tuple(tuple(face.flatten().tolist()) for face in state.values())
+
 def inverse_direction(direction):
     return '-' if direction == '+' else '+'
 
@@ -54,14 +57,6 @@ def reconstruct_path(came_from, current_node):
 
 def is_inverse(last_move, current_move):
     return last_move[0] == current_move[0] and last_move[1] != current_move[1]
-
-def is_in_graph(new_feature, graph_features):
-    new_feature = torch.tensor(new_feature)
-    for i, feature in enumerate(graph_features):
-        feature = torch.tensor(feature)
-        if torch.equal(new_feature, feature):
-            return True, i
-    return False, None
 
 def is_solved(state):
     for face_key in state.values():
